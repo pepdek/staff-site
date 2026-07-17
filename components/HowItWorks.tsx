@@ -15,8 +15,8 @@ const steps = [
   },
   {
     step: "3",
-    title: "2-week trial on your real books",
-    body: "Your bookkeeper works your actual close, not a sample account. You see real output before you commit to anything ongoing.",
+    title: "$295 trial on your real books",
+    body: "Two weeks, flat fee, on your actual close — not a sample account. If you continue, the $295 is credited toward your first month.",
   },
   {
     step: "4",

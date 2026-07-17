@@ -1,5 +1,7 @@
-// TODO: replace with verified benchmark data before launch, current figures
-// are illustrative estimates based on published industry ranges.
+// Figures sourced from published industry pricing (TOA Global, QX
+// Accounting, Entigrity, Madras Accountancy) and fully-loaded domestic
+// salary data as of mid-2026. Update if these providers change published
+// pricing.
 
 export type FirmSize = "solo" | "small" | "growing";
 export type CostMode = "in-house" | "outsourcing";
@@ -23,6 +25,7 @@ export interface ColumnResult {
   monthlyCost: number;
   closeDays: number;
   sameDayResponse: boolean;
+  costSourceLabel: string;
 }
 
 export interface CalculatorResult {
@@ -36,25 +39,46 @@ export interface CalculatorResult {
 // Fully-loaded in-house cost includes payroll taxes, benefits, and overhead
 // on top of base salary — a common industry rule of thumb, not a quote.
 const IN_HOUSE_OVERHEAD_MULTIPLIER = 1.28;
+const IN_HOUSE_MONTHLY_RANGE = [3500, 5000] as const;
+
+export const OFFSHORE_INDIA_MONTHLY_RANGE = [1200, 2000] as const;
+const OFFSHORE_PHILIPPINES_MONTHLY_RANGE = [1800, 2500] as const;
+
+const MERIDIAN_STARTER = 1100;
+const MERIDIAN_STANDARD = 2000;
+const MERIDIAN_FIRM_PER_FTE = 1850;
+
+// The calculator doesn't collect an exact FTE count — this is the assumed
+// headcount per firm-size tier, used to scale the per-FTE benchmarks above.
+const ASSUMED_FTE_COUNT: Record<FirmSize, number> = {
+  solo: 1,
+  small: 1,
+  growing: 3, // Firm tier applies at 3+ FTEs
+};
 
 // Offshore (Philippines/India) close-time multiplier vs. Meridian, reflecting
 // the ~12-13hr timezone gap adding a full day of round-trip latency per
 // close cycle on average.
 const OFFSHORE_CLOSE_DAYS_PENALTY = 2;
 
-// Benchmark monthly cost ranges by firm size — midpoint used for the
-// headline numbers, illustrative only.
-const BENCHMARKS: Record<
-  FirmSize,
-  { offshoreMonthly: number; meridianMonthly: number; baseCloseDays: number }
-> = {
-  solo: { offshoreMonthly: 900, meridianMonthly: 1200, baseCloseDays: 5 },
-  small: { offshoreMonthly: 1800, meridianMonthly: 2400, baseCloseDays: 8 },
-  growing: { offshoreMonthly: 3200, meridianMonthly: 4200, baseCloseDays: 10 },
+// Baseline close-time estimate by firm size — not a pricing figure, kept
+// separate from the cost benchmarks above.
+const BASE_CLOSE_DAYS: Record<FirmSize, number> = {
+  solo: 5,
+  small: 8,
+  growing: 10,
 };
 
+const midpoint = (range: readonly [number, number]) => (range[0] + range[1]) / 2;
+
+function meridianMonthlyFor(firmSize: FirmSize): number {
+  if (firmSize === "solo") return MERIDIAN_STARTER;
+  if (firmSize === "small") return MERIDIAN_STANDARD;
+  return MERIDIAN_FIRM_PER_FTE * ASSUMED_FTE_COUNT.growing;
+}
+
 export function calculate(inputs: CalculatorInputs): CalculatorResult {
-  const benchmark = BENCHMARKS[inputs.firmSize];
+  const fteCount = ASSUMED_FTE_COUNT[inputs.firmSize];
 
   const currentMonthlyCost =
     inputs.costMode === "in-house"
@@ -66,25 +90,40 @@ export function calculate(inputs: CalculatorInputs): CalculatorResult {
     monthlyCost:
       inputs.costMode === "in-house"
         ? currentMonthlyCost
-        : (55000 * IN_HOUSE_OVERHEAD_MULTIPLIER) / 12, // default benchmark salary when not the user's current mode
+        : midpoint(IN_HOUSE_MONTHLY_RANGE) * fteCount,
     closeDays: inputs.closeDays,
     sameDayResponse: false,
+    costSourceLabel:
+      inputs.costMode === "in-house"
+        ? "Cost: your entered salary, fully loaded. Close-time: your entry."
+        : "Cost: industry salary data, fully loaded. Close-time: illustrative estimate.",
   };
 
-  const meridianCloseDays = Math.max(2, Math.round(benchmark.baseCloseDays * 0.6));
+  const meridianMonthly = meridianMonthlyFor(inputs.firmSize);
+  const meridianCloseDays = Math.max(
+    2,
+    Math.round(BASE_CLOSE_DAYS[inputs.firmSize] * 0.6)
+  );
 
+  // Offshore benchmark uses the Philippines figure — the direct parity
+  // comparison Meridian's pricing is pegged to (see FAQ: "why aren't you
+  // cheaper than India"). India's lower range is shown in the guide table.
   const offshore: ColumnResult = {
     label: "Offshore (Philippines/India)",
-    monthlyCost: benchmark.offshoreMonthly,
+    monthlyCost: midpoint(OFFSHORE_PHILIPPINES_MONTHLY_RANGE) * fteCount,
     closeDays: meridianCloseDays + OFFSHORE_CLOSE_DAYS_PENALTY,
     sameDayResponse: false,
+    costSourceLabel:
+      "Cost: published industry range (TOA Global). Close-time: illustrative estimate.",
   };
 
   const meridian: ColumnResult = {
     label: "Meridian (LatAm, same-timezone)",
-    monthlyCost: benchmark.meridianMonthly,
+    monthlyCost: meridianMonthly,
     closeDays: meridianCloseDays,
     sameDayResponse: true,
+    costSourceLabel:
+      "Cost: Meridian published pricing. Close-time: illustrative estimate.",
   };
 
   const annualSavingsVsCurrent = Math.max(

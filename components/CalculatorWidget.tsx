@@ -159,7 +159,7 @@ export default function CalculatorWidget() {
                 {col.sameDayResponse ? "✓ Same-day response" : "✕ Same-day response"}
               </div>
               <ArchivalLabel className="mt-2 block">
-                Illustrative estimate
+                {col.costSourceLabel}
               </ArchivalLabel>
             </div>
           ))}
@@ -181,8 +181,7 @@ export default function CalculatorWidget() {
           days faster with Meridian.
         </p>
         <ArchivalLabel className="mt-2 block">
-          Illustrative estimate — based on the benchmark figures above, not a
-          quote
+          Estimate based on the published figures above, not a fixed quote
         </ArchivalLabel>
         <Link
           href="/#contact"

@@ -8,6 +8,9 @@ export default function Hero() {
         <h1 className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl md:text-[56px] md:leading-[1.1]">
           Bookkeeping help that answers you the same business day.
         </h1>
+        <p className="mt-4 font-label text-sm uppercase tracking-widest text-accent sm:text-base">
+          Same price as the Philippines. Awake when you need us.
+        </p>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-ink-muted">
           Most offshore bookkeeping staff work from the Philippines — a 12–13
           hour gap that means your questions during close sit overnight.

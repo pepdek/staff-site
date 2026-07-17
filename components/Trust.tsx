@@ -16,8 +16,8 @@ const checklist = [
     detail: "Checked with prior firms or clients, see onboarding record.",
   },
   {
-    claim: "Trial period before commitment",
-    detail: "2 weeks on your real books before any ongoing engagement begins.",
+    claim: "$295 trial before commitment",
+    detail: "2 weeks on your real books, credited toward your first month if you continue.",
   },
 ];
 

@@ -9,11 +9,20 @@ const VISIBLE_ROWS_WHEN_LOCKED = 2;
 
 function Row({ row }: { row: (typeof COMPARISON_ROWS)[number] }) {
   return (
-    <div className="grid grid-cols-4 divide-x divide-hairline border-t border-hairline text-sm">
-      <div className="px-6 py-4 font-medium text-ink">{row.label}</div>
-      <div className="px-6 py-4 text-ink-muted">{row.inHouse}</div>
-      <div className="px-6 py-4 text-ink-muted">{row.offshore}</div>
-      <div className="px-6 py-4 text-accent">{row.meridian}</div>
+    <div className="border-t border-hairline">
+      <div className="grid grid-cols-4 divide-x divide-hairline text-sm">
+        <div className="px-6 py-4 font-medium text-ink">{row.label}</div>
+        <div className="px-6 py-4 text-ink-muted">{row.inHouse}</div>
+        <div className="px-6 py-4 text-ink-muted">{row.offshore}</div>
+        <div className="px-6 py-4 text-accent">{row.meridian}</div>
+      </div>
+      {(row.sourceLabel || row.illustrative) && (
+        <div className="px-6 pb-3">
+          <ArchivalLabel>
+            {row.sourceLabel || "Illustrative estimate"}
+          </ArchivalLabel>
+        </div>
+      )}
     </div>
   );
 }
@@ -81,11 +90,6 @@ export default function GuideTable() {
               <Row key={row.label} row={row} />
             ))}
           </div>
-
-          <ArchivalLabel className="mt-3 block">
-            Illustrative estimate — figures are not independently verified,
-            see README before launch
-          </ArchivalLabel>
 
           <div className="mt-8 space-y-4 text-sm leading-relaxed text-ink-muted">
             <p>
