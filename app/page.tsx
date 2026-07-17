@@ -9,7 +9,11 @@ import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 
-export default function Home() {
+export default function Home({
+  searchParams,
+}: {
+  searchParams?: { firmSize?: string; closeDays?: string };
+}) {
   return (
     <main className="min-h-screen bg-paper">
       <Nav />
@@ -20,7 +24,7 @@ export default function Home() {
       <Pricing />
       <Trust />
       <FAQ />
-      <FinalCTA />
+      <FinalCTA searchParams={searchParams} />
       <Footer />
     </main>
   );

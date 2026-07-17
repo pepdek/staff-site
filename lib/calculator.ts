@@ -77,6 +77,24 @@ function meridianMonthlyFor(firmSize: FirmSize): number {
   return MERIDIAN_FIRM_PER_FTE * ASSUMED_FTE_COUNT.growing;
 }
 
+export interface TierRecommendation {
+  name: "Starter" | "Standard" | "Firm";
+  monthlyCost: number;
+}
+
+// Shared by the calculator and the intake wizard so tier logic lives in
+// exactly one place. Solo -> Starter, Small -> Standard, Growing -> Firm
+// (priced per the assumed FTE count above).
+export function recommendedTier(firmSize: FirmSize): TierRecommendation {
+  if (firmSize === "solo") {
+    return { name: "Starter", monthlyCost: MERIDIAN_STARTER };
+  }
+  if (firmSize === "small") {
+    return { name: "Standard", monthlyCost: MERIDIAN_STANDARD };
+  }
+  return { name: "Firm", monthlyCost: meridianMonthlyFor(firmSize) };
+}
+
 export function calculate(inputs: CalculatorInputs): CalculatorResult {
   const fteCount = ASSUMED_FTE_COUNT[inputs.firmSize];
 

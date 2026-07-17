@@ -184,7 +184,7 @@ export default function CalculatorWidget() {
           Estimate based on the published figures above, not a fixed quote
         </ArchivalLabel>
         <Link
-          href="/#contact"
+          href={`/?firmSize=${firmSize}&closeDays=${closeDays}#contact`}
           className="btn-primary mt-6 inline-block rounded-lg px-6 py-3 text-base font-medium"
         >
           Get this exact setup — book a call

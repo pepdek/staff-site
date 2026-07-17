@@ -8,27 +8,50 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
   }
 
-  const { name, email, firmSize, painPoint, source } = body as Record<string, string>;
+  const {
+    name,
+    email,
+    firmSize,
+    painPoint,
+    source,
+    partial,
+    software,
+    otherSoftware,
+    closeDays,
+    currentProcess,
+    painPoints,
+    otherPain,
+  } = body as Record<string, unknown>;
 
-  if (!email?.trim()) {
-    return NextResponse.json(
-      { error: "Email is required." },
-      { status: 400 }
-    );
-  }
-  if (!EMAIL_RE.test(email.trim())) {
-    return NextResponse.json(
-      { error: "Please enter a valid email address." },
-      { status: 400 }
-    );
+  const emailStr = typeof email === "string" ? email.trim() : "";
+
+  // Partial (best-effort, exit-before-completion) submissions from the
+  // intake wizard skip validation entirely — there may be no email yet.
+  if (!partial) {
+    if (!emailStr) {
+      return NextResponse.json({ error: "Email is required." }, { status: 400 });
+    }
+    if (!EMAIL_RE.test(emailStr)) {
+      return NextResponse.json(
+        { error: "Please enter a valid email address." },
+        { status: 400 }
+      );
+    }
   }
 
   const lead = {
-    name: name?.trim() || "(not provided)",
-    email: email.trim(),
+    name: typeof name === "string" && name.trim() ? name.trim() : "(not provided)",
+    email: emailStr || "(not provided)",
     firmSize,
     painPoint,
     source: source || "homepage",
+    partial: Boolean(partial),
+    software,
+    otherSoftware,
+    closeDays,
+    currentProcess,
+    painPoints,
+    otherPain,
   };
 
   if (process.env.RESEND_API_KEY) {
@@ -40,8 +63,18 @@ export async function POST(req: Request) {
     await resend.emails.send({
       from: "Meridian Leads <leads@example.com>",
       to,
-      subject: `New lead (${lead.source}): ${lead.name}`,
-      text: `Source: ${lead.source}\nName: ${lead.name}\nEmail: ${lead.email}\nFirm size: ${lead.firmSize || "(not provided)"}\nPain point: ${lead.painPoint || "(not provided)"}`,
+      subject: `New lead (${lead.source}${lead.partial ? ", partial" : ""}): ${lead.name}`,
+      text: [
+        `Source: ${lead.source}${lead.partial ? " (partial — exited before completing)" : ""}`,
+        `Name: ${lead.name}`,
+        `Email: ${lead.email}`,
+        `Firm size: ${lead.firmSize || "(not provided)"}`,
+        `Software: ${lead.software || "(not provided)"}${lead.otherSoftware ? ` (${lead.otherSoftware})` : ""}`,
+        `Close time: ${lead.closeDays ? `${lead.closeDays} business days` : "(not provided)"}`,
+        `Current process: ${lead.currentProcess || "(not provided)"}`,
+        `Pain points: ${Array.isArray(lead.painPoints) && lead.painPoints.length ? lead.painPoints.join(", ") : "(not provided)"}${lead.otherPain ? ` (${lead.otherPain})` : ""}`,
+        `Pain point (free text): ${lead.painPoint || "(not provided)"}`,
+      ].join("\n"),
     });
   } else {
     // TODO: wire up email delivery — set RESEND_API_KEY and LEAD_NOTIFICATION_EMAIL to send leads via Resend.

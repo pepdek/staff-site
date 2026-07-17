@@ -1,7 +1,24 @@
 import Reveal from "./Reveal";
-import LeadForm from "./LeadForm";
+import IntakeWizard from "./IntakeWizard";
+import type { FirmSize } from "@/lib/calculator";
 
-export default function FinalCTA() {
+const VALID_FIRM_SIZES: FirmSize[] = ["solo", "small", "growing"];
+
+export default function FinalCTA({
+  searchParams,
+}: {
+  searchParams?: { firmSize?: string; closeDays?: string };
+}) {
+  const rawFirmSize = searchParams?.firmSize;
+  const firmSize = VALID_FIRM_SIZES.includes(rawFirmSize as FirmSize)
+    ? (rawFirmSize as FirmSize)
+    : undefined;
+  const closeDays = searchParams?.closeDays ? Number(searchParams.closeDays) : undefined;
+
+  // Coming from the calculator means steps 1-2 are already answered —
+  // skip straight to the qualifying pain-point step.
+  const startStep = firmSize ? 3 : 1;
+
   return (
     <section id="contact" className="border-t border-hairline px-6 py-28">
       <div className="mx-auto max-w-xl">
@@ -10,13 +27,17 @@ export default function FinalCTA() {
             Get answers on your close the same day you ask.
           </h2>
           <p className="mt-3 text-center text-ink-muted">
-            15 minutes to see if a timezone-matched bookkeeper is a fit for
-            your firm.
+            A few quick questions, then we&apos;ll recommend a plan and get
+            your trial started.
           </p>
         </Reveal>
         <div className="mt-10">
           <Reveal>
-            <LeadForm />
+            <IntakeWizard
+              initialFirmSize={firmSize}
+              initialCloseDays={closeDays}
+              startStep={startStep}
+            />
           </Reveal>
         </div>
       </div>

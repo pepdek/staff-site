@@ -1,10 +1,10 @@
 # Meridian — landing page
 
 Next.js 14 (App Router) + TypeScript + Tailwind + Framer Motion. No
-database — lead form posts to `/app/api/lead/route.ts`, which emails via
-Resend if configured, or logs to console otherwise. The `/calculator` and
-`/guide` pages post to the same endpoint with a `source` field so leads can
-be told apart.
+database — the homepage's `IntakeWizard` (`components/IntakeWizard.tsx`)
+and the `/guide` gate both post to `/app/api/lead/route.ts`, which emails
+via Resend if configured, or logs to console otherwise. Every submission
+includes a `source` field (`wizard`, `guide`) so leads can be told apart.
 
 ## Run locally
 
@@ -37,3 +37,4 @@ console (see the `TODO` in `app/api/lead/route.ts`).
 - **Status dashboard** (`components/HowItWorks.tsx`, step 4) — copy says "coming soon" since no real dashboard exists yet; update once built.
 - **Privacy/Terms links** (`components/Footer.tsx`) — currently `#` placeholders.
 - **`ArchivalLabel` source tags** — every stat, savings figure, and comparison-table row is annotated with an `ArchivalLabel` (see `components/ArchivalLabel.tsx`). Before launch, review each one and confirm it reads either "Illustrative estimate" (still a placeholder) or an actual source (e.g. "Source: BLS median, 2024") — don't ship a real figure still labeled as illustrative, or vice versa.
+- **Intake wizard qualifying questions** (`components/IntakeWizard.tsx`) — Step 3's pain-point list and the software options in Step 1 are best guesses at what qualifies a lead, not finalized categories. Review both against real client feedback after the first 10-20 completions and adjust.
