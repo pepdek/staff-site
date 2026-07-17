@@ -21,6 +21,7 @@ export async function POST(req: Request) {
     currentProcess,
     painPoints,
     otherPain,
+    role,
   } = body as Record<string, unknown>;
 
   const emailStr = typeof email === "string" ? email.trim() : "";
@@ -52,6 +53,7 @@ export async function POST(req: Request) {
     currentProcess,
     painPoints,
     otherPain,
+    role,
   };
 
   if (process.env.RESEND_API_KEY) {
@@ -68,6 +70,7 @@ export async function POST(req: Request) {
         `Source: ${lead.source}${lead.partial ? " (partial — exited before completing)" : ""}`,
         `Name: ${lead.name}`,
         `Email: ${lead.email}`,
+        `Landing page: ${lead.role || "(homepage / not role-specific)"}`,
         `Firm size: ${lead.firmSize || "(not provided)"}`,
         `Software: ${lead.software || "(not provided)"}${lead.otherSoftware ? ` (${lead.otherSoftware})` : ""}`,
         `Close time: ${lead.closeDays ? `${lead.closeDays} business days` : "(not provided)"}`,

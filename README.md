@@ -38,3 +38,12 @@ console (see the `TODO` in `app/api/lead/route.ts`).
 - **Privacy/Terms links** (`components/Footer.tsx`) — currently `#` placeholders.
 - **`ArchivalLabel` source tags** — every stat, savings figure, and comparison-table row is annotated with an `ArchivalLabel` (see `components/ArchivalLabel.tsx`). Before launch, review each one and confirm it reads either "Illustrative estimate" (still a placeholder) or an actual source (e.g. "Source: BLS median, 2024") — don't ship a real figure still labeled as illustrative, or vice versa.
 - **Intake wizard qualifying questions** (`components/IntakeWizard.tsx`) — Step 3's pain-point list and the software options in Step 1 are best guesses at what qualifies a lead, not finalized categories. Review both against real client feedback after the first 10-20 completions and adjust.
+
+## Role-specific landing pages
+
+`/bookkeeper` and `/staff-accountant` (`components/RolePageContent.tsx`) are
+the first two role pages, targeting distinct buyer search intent rather
+than the general homepage. The logical next role pages once these two are
+validated: `/tax-preparer`, `/tax-reviewer`, `/ap-ar-specialist`, and
+`/payroll-specialist`. Don't build them yet — this is a sequencing note,
+not a task, until bookkeeper/staff-accountant prove out.

@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Problem from "@/components/Problem";
 import CalculatorSection from "@/components/CalculatorSection";
 import HowItWorks from "@/components/HowItWorks";
+import RoleCoverage from "@/components/RoleCoverage";
 import Pricing from "@/components/Pricing";
 import Trust from "@/components/Trust";
 import FAQ from "@/components/FAQ";
@@ -21,6 +22,7 @@ export default function Home({
       <Problem />
       <CalculatorSection />
       <HowItWorks />
+      <RoleCoverage />
       <Pricing />
       <Trust />
       <FAQ />

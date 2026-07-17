@@ -9,6 +9,27 @@ export default function Nav() {
           Meridian
         </Link>
         <div className="hidden items-center gap-8 text-sm text-ink-muted md:flex">
+          <div className="group relative">
+            <button className="flex items-center gap-1 hover:text-ink">
+              Who we place
+            </button>
+            <div className="invisible absolute left-0 top-full pt-3 opacity-0 transition-opacity group-hover:visible group-hover:opacity-100">
+              <div className="w-56 overflow-hidden rounded-xl border border-hairline bg-paper shadow-lg">
+                <Link
+                  href="/bookkeeper"
+                  className="block px-4 py-3 text-sm text-ink-muted hover:bg-accent-light hover:text-ink"
+                >
+                  Bookkeeper
+                </Link>
+                <Link
+                  href="/staff-accountant"
+                  className="block px-4 py-3 text-sm text-ink-muted hover:bg-accent-light hover:text-ink"
+                >
+                  Staff Accountant
+                </Link>
+              </div>
+            </div>
+          </div>
           <Link href="/#how-it-works" className="hover:text-ink">
             How it works
           </Link>

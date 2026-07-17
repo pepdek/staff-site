@@ -33,6 +33,8 @@ export default function CalculatorWidget() {
   );
 
   const columns = [result.inHouse, result.offshore, result.meridian];
+  const roleHref = firmSize === "growing" ? "/staff-accountant" : "/bookkeeper";
+  const roleLabel = firmSize === "growing" ? "a staff accountant" : "a bookkeeper";
 
   return (
     <div>
@@ -189,6 +191,12 @@ export default function CalculatorWidget() {
         >
           Get this exact setup — book a call
         </Link>
+        <p className="mt-4 text-sm text-ink-muted">
+          Looking to outsource {roleLabel}?{" "}
+          <Link href={roleHref} className="text-accent underline">
+            See how that works
+          </Link>
+        </p>
       </GlassCard>
     </div>
   );

@@ -43,6 +43,9 @@ interface IntakeWizardProps {
   initialFirmSize?: FirmSize;
   initialCloseDays?: number;
   startStep?: number;
+  // Which landing page the lead came from (e.g. "bookkeeper",
+  // "staff-accountant"). Captured silently — not a visible form field.
+  role?: string;
 }
 
 function OptionChip({
@@ -71,6 +74,7 @@ export default function IntakeWizard({
   initialFirmSize,
   initialCloseDays,
   startStep = 1,
+  role,
 }: IntakeWizardProps) {
   const [step, setStep] = useState(startStep);
   const [direction, setDirection] = useState(1);
@@ -113,6 +117,7 @@ export default function IntakeWizard({
       painPoints,
       otherPain,
       source: "wizard",
+      role: role || null,
       partial,
     };
   }
