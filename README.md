@@ -73,3 +73,18 @@ client-facing (`/`, `/calculator`, `/guide`, `/bookkeeper`,
 - The pill toggle in the nav (`components/LanguageToggle.tsx`) switches locale in place; persistence across visits and initial browser-language detection both come from next-intl's built-in `NEXT_LOCALE` cookie + `Accept-Language` negotiation (`middleware.ts`) — not hand-rolled `localStorage`, since the library already does this and a second mechanism would just be a second source of truth for the same setting.
 - **Spanish and Portuguese translations** (`messages/es.json`, `messages/pt.json`) were written for initial launch, not machine-translated, but should be reviewed by a native speaker in each target market — ideally someone from the actual candidate pool — before this goes fully live. This is a **review, not a re-write**: the structure and terminology (QuickBooks, Xero, GAAP left untranslated, as used in LATAM accounting contexts) are intentional; the ask is to sanity-check phrasing, not redo it.
 - Pay-band and other numeric figures in `TalentWizard` are identical across all three `messages/*.json` files by design (see above) — don't let a translation review touch the numbers.
+
+## Closing gaps from the prior improvement-pass review
+
+Five items identified in a review of earlier recommendations that never
+made it into the build, now closed:
+
+1. **Client-facing status tracker** (`components/ClientStatusTracker.tsx`) — mirrors the talent-side `StatusTracker` via the shared `components/PipelineStages.tsx`, shown after `IntakeWizard` submission. Stage timeframes ("scheduled within 2 business days," etc.) are placeholder timing pending real internal SLA data, same caveat as the talent tracker.
+2. **Guarantee statement** (`components/GuaranteeCallout.tsx`, used in `Pricing.tsx` and `FAQ.tsx`) — "not the right fit in your first 30 days" policy is a **placeholder needing sign-off on the exact terms** (what counts as "not the right fit," refund mechanics, timing) before launch.
+3. **Named point of contact** (`components/DedicatedContactCard.tsx`, on the homepage and in `ClientStatusTracker`) — name and photo are **placeholders pending real team assignment**; nothing here is launch-ready until a real person is named.
+4. **Monthly close checklist** (`/checklist`) — content-only, gated the same way as `/guide` (first section free, rest behind email capture, `source: "checklist"`). Launch-ready as built.
+5. **Pilot-readiness checklist** (`/pilot-readiness`) — same gating pattern, `source: "pilot-readiness"`, linked directly from the `IntakeWizard`'s post-submission status view. Launch-ready as built.
+
+Items 2 and 3 are the two in this batch that need real business decisions
+or team info, not just review — everything else here (1, 4, 5) is
+functional and launch-ready as built.

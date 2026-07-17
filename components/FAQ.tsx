@@ -12,6 +12,10 @@ const faqs = [
     a: "No. Month-to-month, cancel anytime with 30 days' notice.",
   },
   {
+    q: "What if it doesn't work out?",
+    a: "Not the right fit in your first 30 days? We'll match you with someone else at no additional cost, or refund the difference.",
+  },
+  {
     q: "What happens after the trial?",
     a: "The trial is $295 flat for two weeks on your real books — not free. If you continue past the trial, that $295 is credited toward your first month, so it's not an extra cost on top of your plan.",
   },

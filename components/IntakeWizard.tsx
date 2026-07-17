@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import LedgerCard from "./LedgerCard";
+import Link from "next/link";
 import { WizardShell, OptionChip } from "./WizardShell";
+import ClientStatusTracker from "./ClientStatusTracker";
 import { recommendedTier, type FirmSize } from "@/lib/calculator";
 
 type Software = "qbo" | "qbd" | "xero" | "other";
@@ -136,15 +137,15 @@ export default function IntakeWizard({
 
   if (status === "success") {
     return (
-      <LedgerCard className="p-8 text-center">
-        <h3 className="text-lg font-semibold text-ink">
-          Thanks — we&apos;ll be in touch shortly.
-        </h3>
-        <p className="mt-2 text-sm text-ink-muted">
-          We typically respond within one business day to schedule your
-          trial.
+      <div className="space-y-6">
+        <ClientStatusTracker />
+        <p className="text-center text-sm text-ink-muted">
+          Trial starting soon?{" "}
+          <Link href="/pilot-readiness" className="text-accent underline">
+            See what to have ready before it starts
+          </Link>
         </p>
-      </LedgerCard>
+      </div>
     );
   }
 

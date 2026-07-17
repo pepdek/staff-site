@@ -1,6 +1,7 @@
 import Reveal from "./Reveal";
 import LedgerCard from "./LedgerCard";
 import ArchivalLabel from "./ArchivalLabel";
+import GuaranteeCallout from "./GuaranteeCallout";
 
 const tiers = [
   {
@@ -78,6 +79,9 @@ export default function Pricing() {
           No setup fees. No long-term contract. Month-to-month, cancel with
           30 days&apos; notice.
         </p>
+        <Reveal>
+          <GuaranteeCallout className="mx-auto mt-8 max-w-2xl" />
+        </Reveal>
       </div>
     </section>
   );
