@@ -1,35 +1,63 @@
 import Reveal from "./Reveal";
+import FlipCard from "./FlipCard";
+import ArchivalLabel from "./ArchivalLabel";
 
 const checklist = [
-  "NDA signed before any client data is shared",
-  "GAAP familiarity verified in a working interview, not just a resume",
-  "References checked with prior firms or clients",
-  "2-week trial period on your real books before any ongoing commitment",
+  {
+    claim: "NDA signed",
+    detail: "Signed prior to engagement start, before any client data is shared.",
+  },
+  {
+    claim: "GAAP familiarity verified",
+    detail: "Verified in a working interview on real close scenarios, not just a resume.",
+  },
+  {
+    claim: "References checked",
+    detail: "Checked with prior firms or clients, see onboarding record.",
+  },
+  {
+    claim: "Trial period before commitment",
+    detail: "2 weeks on your real books before any ongoing engagement begins.",
+  },
 ];
 
 export default function Trust() {
   return (
-    <section className="px-6 py-28">
+    <section className="border-t border-hairline px-6 py-28">
       <div className="mx-auto max-w-3xl">
         <Reveal>
-          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <ArchivalLabel className="mb-3 block text-center">
+            Fig. 05 — Trust &amp; compliance
+          </ArchivalLabel>
+          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             Vetted before they touch your books
           </h2>
+          <p className="mx-auto mt-3 max-w-lg text-center text-sm text-ink-muted">
+            Click or hover a card to see how each claim is verified.
+          </p>
         </Reveal>
         <Reveal>
-          <ul className="mt-12 space-y-4">
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
             {checklist.map((item) => (
-              <li
-                key={item}
-                className="glass-card flex items-center gap-3 rounded-xl px-5 py-4"
-              >
-                <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent/20 text-accent-light">
-                  ✓
-                </span>
-                <span className="text-sm text-white/80">{item}</span>
-              </li>
+              <FlipCard
+                key={item.claim}
+                className="h-32"
+                front={
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-light text-accent">
+                      ✓
+                    </span>
+                    <span className="text-sm font-medium text-ink">
+                      {item.claim}
+                    </span>
+                  </div>
+                }
+                back={
+                  <p className="text-sm text-ink">{item.detail}</p>
+                }
+              />
             ))}
-          </ul>
+          </div>
         </Reveal>
       </div>
     </section>

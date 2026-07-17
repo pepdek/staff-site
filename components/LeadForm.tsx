@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import LedgerCard from "./LedgerCard";
 
 const FIRM_SIZES = [
   "Solo practitioner",
@@ -41,96 +42,95 @@ export default function LeadForm() {
 
   if (status === "success") {
     return (
-      <div className="glass-card rounded-2xl p-8 text-center">
-        <h3 className="text-lg font-semibold text-white">
+      <LedgerCard className="p-8 text-center">
+        <h3 className="text-lg font-semibold text-ink">
           Thanks — we&apos;ll be in touch shortly.
         </h3>
-        <p className="mt-2 text-sm text-white/60">
+        <p className="mt-2 text-sm text-ink-muted">
           We typically respond within one business day to schedule your call.
         </p>
-      </div>
+      </LedgerCard>
     );
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="glass-card grid gap-4 rounded-2xl p-8 text-left"
-    >
-      <div className="grid gap-4 sm:grid-cols-2">
-        <div>
-          <label className="mb-1 block text-sm text-white/70" htmlFor="name">
-            Name
-          </label>
-          <input
-            id="name"
-            name="name"
-            required
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-white placeholder-white/30 outline-none focus:border-accent-light"
-            placeholder="Jane Rivera"
-          />
+    <form onSubmit={handleSubmit}>
+      <LedgerCard className="grid gap-4 p-8 text-left">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="mb-1 block text-sm text-ink-muted" htmlFor="name">
+              Name
+            </label>
+            <input
+              id="name"
+              name="name"
+              required
+              className="w-full rounded-lg border border-hairline bg-paper px-4 py-2.5 text-ink placeholder-ink-muted/50 outline-none focus:border-accent"
+              placeholder="Jane Rivera"
+            />
+          </div>
+          <div>
+            <label className="mb-1 block text-sm text-ink-muted" htmlFor="email">
+              Email
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              required
+              className="w-full rounded-lg border border-hairline bg-paper px-4 py-2.5 text-ink placeholder-ink-muted/50 outline-none focus:border-accent"
+              placeholder="jane@yourfirm.com"
+            />
+          </div>
         </div>
-        <div>
-          <label className="mb-1 block text-sm text-white/70" htmlFor="email">
-            Email
-          </label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-white placeholder-white/30 outline-none focus:border-accent-light"
-            placeholder="jane@yourfirm.com"
-          />
-        </div>
-      </div>
 
-      <div>
-        <label className="mb-1 block text-sm text-white/70" htmlFor="firmSize">
-          Firm size
-        </label>
-        <select
-          id="firmSize"
-          name="firmSize"
-          required
-          className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-white outline-none focus:border-accent-light"
-          defaultValue=""
-        >
-          <option value="" disabled>
-            Select firm size
-          </option>
-          {FIRM_SIZES.map((size) => (
-            <option key={size} value={size} className="bg-navy">
-              {size}
+        <div>
+          <label className="mb-1 block text-sm text-ink-muted" htmlFor="firmSize">
+            Firm size
+          </label>
+          <select
+            id="firmSize"
+            name="firmSize"
+            required
+            className="w-full rounded-lg border border-hairline bg-paper px-4 py-2.5 text-ink outline-none focus:border-accent"
+            defaultValue=""
+          >
+            <option value="" disabled>
+              Select firm size
             </option>
-          ))}
-        </select>
-      </div>
+            {FIRM_SIZES.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+        </div>
 
-      <div>
-        <label className="mb-1 block text-sm text-white/70" htmlFor="painPoint">
-          What&apos;s the most painful part of your monthly close right now? (optional)
-        </label>
-        <textarea
-          id="painPoint"
-          name="painPoint"
-          rows={3}
-          className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-white placeholder-white/30 outline-none focus:border-accent-light"
-          placeholder="e.g. Reconciling multiple bank feeds always takes forever"
-        />
-      </div>
+        <div>
+          <label className="mb-1 block text-sm text-ink-muted" htmlFor="painPoint">
+            What&apos;s the most painful part of your monthly close right now? (optional)
+          </label>
+          <textarea
+            id="painPoint"
+            name="painPoint"
+            rows={3}
+            className="w-full rounded-lg border border-hairline bg-paper px-4 py-2.5 text-ink placeholder-ink-muted/50 outline-none focus:border-accent"
+            placeholder="e.g. Reconciling multiple bank feeds always takes forever"
+          />
+        </div>
 
-      {status === "error" && (
-        <p className="text-sm text-red-400">{error}</p>
-      )}
+        {status === "error" && (
+          <p className="text-sm text-red-700">{error}</p>
+        )}
 
-      <button
-        type="submit"
-        disabled={status === "loading"}
-        className="btn-primary rounded-lg px-6 py-3 text-base font-medium text-white disabled:opacity-60"
-      >
-        {status === "loading" ? "Sending…" : "Book a 15-minute call"}
-      </button>
+        <button
+          type="submit"
+          disabled={status === "loading"}
+          className="btn-primary rounded-lg px-6 py-3 text-base font-medium disabled:opacity-60"
+        >
+          {status === "loading" ? "Sending…" : "Book a 15-minute call"}
+        </button>
+      </LedgerCard>
     </form>
   );
 }

@@ -1,5 +1,6 @@
 import Reveal from "./Reveal";
-import GlassCard from "./GlassCard";
+import LedgerCard from "./LedgerCard";
+import ArchivalLabel from "./ArchivalLabel";
 
 const steps = [
   {
@@ -26,27 +27,30 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="how-it-works" className="px-6 py-28">
+    <section id="how-it-works" className="border-t border-hairline px-6 py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <ArchivalLabel className="mb-3 block text-center">
+            Fig. 03 — How it works
+          </ArchivalLabel>
+          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             How it works
           </h2>
         </Reveal>
         <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((s) => (
             <Reveal key={s.step}>
-              <GlassCard className="h-full p-6">
-                <span className="text-sm font-semibold text-accent-light">
+              <LedgerCard className="h-full p-6">
+                <span className="font-label text-sm font-semibold text-accent">
                   Step {s.step}
                 </span>
-                <h3 className="mt-2 text-base font-semibold text-white">
+                <h3 className="mt-2 text-base font-semibold text-ink">
                   {s.title}
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/60">
+                <p className="mt-2 text-sm leading-relaxed text-ink-muted">
                   {s.body}
                 </p>
-              </GlassCard>
+              </LedgerCard>
             </Reveal>
           ))}
         </div>

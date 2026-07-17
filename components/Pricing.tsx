@@ -1,5 +1,6 @@
 import Reveal from "./Reveal";
-import GlassCard from "./GlassCard";
+import LedgerCard from "./LedgerCard";
+import ArchivalLabel from "./ArchivalLabel";
 
 const tiers = [
   {
@@ -22,13 +23,16 @@ const tiers = [
 
 export default function Pricing() {
   return (
-    <section id="pricing" className="px-6 py-28">
+    <section id="pricing" className="border-t border-hairline px-6 py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <ArchivalLabel className="mb-3 block text-center">
+            Fig. 04 — Pricing
+          </ArchivalLabel>
+          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             Pricing
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-center text-white/60">
+          <p className="mx-auto mt-3 max-w-xl text-center text-ink-muted">
             Example pricing shown below — update once you&apos;ve confirmed
             real costs. No long-term contracts on any tier.
           </p>
@@ -36,22 +40,24 @@ export default function Pricing() {
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {tiers.map((t) => (
             <Reveal key={t.name}>
-              <GlassCard featured={t.featured} className="h-full p-8">
-                <h3 className="text-lg font-semibold text-white">{t.name}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/60">
+              <LedgerCard
+                className={`h-full p-8 ${t.featured ? "border-accent" : ""}`}
+              >
+                <h3 className="text-lg font-semibold text-ink">{t.name}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                   {t.desc}
                 </p>
-                <div className="mt-6 text-2xl font-semibold text-white">
+                <div className="mt-6 text-2xl font-semibold text-ink">
                   {t.price}
                 </div>
-                <p className="mt-1 text-xs text-white/40">
-                  Placeholder — confirm real pricing before launch
-                </p>
-              </GlassCard>
+                <ArchivalLabel className="mt-1 block">
+                  Illustrative estimate — confirm real pricing before launch
+                </ArchivalLabel>
+              </LedgerCard>
             </Reveal>
           ))}
         </div>
-        <p className="mt-8 text-center text-sm text-white/50">
+        <p className="mt-8 text-center text-sm text-ink-muted">
           No long-term contracts — cancel or adjust hours month to month.
         </p>
       </div>

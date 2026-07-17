@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
-import MeshBackground from "@/components/MeshBackground";
 import Reveal from "@/components/Reveal";
 import CalculatorWidget from "@/components/CalculatorWidget";
+import ArchivalLabel from "@/components/ArchivalLabel";
 
 export const metadata: Metadata = {
   title: "Cost & Speed Calculator — Meridian",
@@ -25,23 +25,25 @@ export const metadata: Metadata = {
 
 export default function CalculatorPage() {
   return (
-    <main className="min-h-screen bg-navy">
+    <main className="min-h-screen bg-paper">
       <Nav />
-      <section className="relative overflow-hidden px-6 pb-16 pt-20 md:pt-28">
-        <MeshBackground />
-        <div className="relative mx-auto max-w-3xl text-center">
+      <section className="border-b border-hairline px-6 pb-16 pt-20 md:pt-28">
+        <div className="mx-auto max-w-3xl text-center">
           <Reveal>
-            <h1 className="font-display text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-[56px] md:leading-[1.05]">
+            <ArchivalLabel className="mb-3 block">
+              Fig. 01 — Cost &amp; speed calculator
+            </ArchivalLabel>
+            <h1 className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl md:text-[56px] md:leading-[1.1]">
               What is the Philippines timezone gap actually costing you?
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-lg text-white/70">
+            <p className="mx-auto mt-6 max-w-2xl text-lg text-ink-muted">
               Adjust your firm size, close time, and current cost below to
               see a live, side-by-side comparison.
             </p>
           </Reveal>
         </div>
       </section>
-      <div className="mx-auto max-w-5xl px-6 pb-28">
+      <div className="mx-auto max-w-5xl px-6 pb-28 pt-16">
         <Reveal>
           <CalculatorWidget />
         </Reveal>

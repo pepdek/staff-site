@@ -1,5 +1,6 @@
 import Reveal from "./Reveal";
-import GlassCard from "./GlassCard";
+import LedgerCard from "./LedgerCard";
+import ArchivalLabel from "./ArchivalLabel";
 
 const problems = [
   {
@@ -18,24 +19,25 @@ const problems = [
 
 export default function Problem() {
   return (
-    <section className="px-6 py-28">
+    <section className="border-t border-hairline px-6 py-28">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <ArchivalLabel className="mb-3 block text-center">
+            Fig. 01 — The problem
+          </ArchivalLabel>
+          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             You&apos;ve tried to solve this before.
           </h2>
         </Reveal>
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {problems.map((p) => (
             <Reveal key={p.title}>
-              <GlassCard className="h-full p-8">
-                <h3 className="text-lg font-semibold text-white">
-                  {p.title}
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-white/60">
+              <LedgerCard className="h-full p-8">
+                <h3 className="text-lg font-semibold text-ink">{p.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                   {p.body}
                 </p>
-              </GlassCard>
+              </LedgerCard>
             </Reveal>
           ))}
         </div>

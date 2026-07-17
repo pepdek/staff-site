@@ -36,3 +36,4 @@ console (see the `TODO` in `app/api/lead/route.ts`).
 - **Contact/from email addresses** — `founders@example.com` (default lead notification address), `leads@example.com` (Resend "from" address), `hello@example.com` (footer) in `app/api/lead/route.ts` and `components/Footer.tsx`.
 - **Status dashboard** (`components/HowItWorks.tsx`, step 4) — copy says "coming soon" since no real dashboard exists yet; update once built.
 - **Privacy/Terms links** (`components/Footer.tsx`) — currently `#` placeholders.
+- **`ArchivalLabel` source tags** — every stat, savings figure, and comparison-table row is annotated with an `ArchivalLabel` (see `components/ArchivalLabel.tsx`). Before launch, review each one and confirm it reads either "Illustrative estimate" (still a placeholder) or an actual source (e.g. "Source: BLS median, 2024") — don't ship a real figure still labeled as illustrative, or vice versa.

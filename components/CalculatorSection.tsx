@@ -1,15 +1,19 @@
 import Reveal from "./Reveal";
 import CalculatorWidget from "./CalculatorWidget";
+import ArchivalLabel from "./ArchivalLabel";
 
 export default function CalculatorSection() {
   return (
-    <section id="calculator" className="px-6 py-28">
+    <section id="calculator" className="border-t border-hairline px-6 py-28">
       <div className="mx-auto max-w-5xl">
         <Reveal>
-          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <ArchivalLabel className="mb-3 block text-center">
+            Fig. 02 — The calculator
+          </ArchivalLabel>
+          <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
             See what same-timezone staffing is worth to your firm
           </h2>
-          <p className="mx-auto mt-3 max-w-xl text-center text-white/60">
+          <p className="mx-auto mt-3 max-w-xl text-center text-ink-muted">
             Compare your current cost and close time against Meridian —
             updates live as you adjust the inputs.
           </p>

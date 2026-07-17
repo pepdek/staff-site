@@ -2,46 +2,108 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design tokens — "The trusted ledger"
+ *
+ * This brand's buyer is a solo or small CPA/bookkeeping firm owner deciding
+ * whether to trust a stranger with client financial data. A dark SaaS
+ * dashboard aesthetic (the prior "Stripe, but more elevated" direction)
+ * signals "tech startup" to that buyer, which works against the sale.
+ * A warm paper canvas, serif display type, and an archival labeling system
+ * signal "documented, precise, established" instead.
+ *
+ * One accent color only (emerald) — never combine with a second accent.
+ */
+:root {
+  --ledger-paper: #f7f5ef;
+  --ledger-ink: #14171f;
+  --ledger-ink-muted: #4a4e5a;
+  --ledger-hairline: #d8d5c9;
+  --ledger-navy-deep: #10151f; /* footer band + one contrast section only */
+  --accent-emerald: #0f6e4a;
+  --accent-emerald-light: #e1f0e8;
+}
+
 body {
-  background-color: #0a0e1a;
-  color: #e6e9f2;
+  background-color: var(--ledger-paper);
+  color: var(--ledger-ink);
 }
 
-/* scroll-reveal: JS toggles .is-visible once an element enters the viewport */
-.reveal {
-  opacity: 0;
-  transform: translateY(16px);
-  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+/* LedgerCard — the default card everywhere except the calculator's one glass moment. */
+.ledger-card {
+  background: var(--ledger-paper);
+  border: 1px solid var(--ledger-hairline);
+  box-shadow: 0 1px 2px rgba(20, 23, 31, 0.04);
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
 }
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+.ledger-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -8px rgba(20, 23, 31, 0.12);
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* GlassPanel — restricted to the calculator's result panel only. Do not reuse elsewhere. */
+.glass-panel {
+  background: rgba(247, 245, 239, 0.7);
   backdrop-filter: blur(12px);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-}
-.glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.16);
-  box-shadow: 0 0 40px -10px rgba(99, 102, 241, 0.25);
+  border: 1px solid var(--ledger-hairline);
+  box-shadow: 0 8px 30px -10px rgba(20, 23, 31, 0.15);
 }
 
 .btn-primary {
-  background: #6366f1;
+  background: var(--accent-emerald);
+  color: #fff;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px -6px rgba(99, 102, 241, 0.55);
-  background: #7274f3;
+  box-shadow: 0 8px 24px -8px rgba(15, 110, 74, 0.45);
+  background: #0c5a3c;
 }
 
-.mesh-orb {
-  filter: blur(90px);
-  pointer-events: none;
+/* FlipCard — trust/compliance badges only. */
+.flip-card {
+  perspective: 1000px;
+}
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.35s ease;
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card-inner,
+.flip-card:focus-within .flip-card-inner {
+  transform: rotateY(180deg);
+}
+.flip-card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+}
+.flip-card-back {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card-inner {
+    transition: opacity 0.35s ease;
+    transform: none !important;
+  }
+  .flip-card-face {
+    backface-visibility: visible;
+  }
+  .flip-card-back {
+    transform: none;
+    opacity: 0;
+  }
+  .flip-card:hover .flip-card-back,
+  .flip-card:focus-within .flip-card-back {
+    opacity: 1;
+  }
+  .flip-card:hover .flip-card-front,
+  .flip-card:focus-within .flip-card-front {
+    opacity: 0;
+  }
 }
 
 /* Guide "Download as PDF" uses window.print() — force legible dark-on-light output. */
