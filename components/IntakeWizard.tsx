@@ -5,6 +5,7 @@ import Link from "next/link";
 import { WizardShell, OptionChip } from "./WizardShell";
 import ClientStatusTracker from "./ClientStatusTracker";
 import { recommendedTier, type FirmSize } from "@/lib/calculator";
+import { trackEvent } from "@/lib/analytics";
 
 type Software = "qbo" | "qbd" | "xero" | "other";
 type CurrentProcess = "diy" | "in-house" | "outsourcing" | "behind";
@@ -73,6 +74,9 @@ export default function IntakeWizard({
   const submittedRef = useRef(false);
 
   function goTo(next: number) {
+    if (next > step) {
+      trackEvent("IntakeWizard: Step Completed", { step });
+    }
     setDirection(next > step ? 1 : -1);
     setStep(next);
   }
@@ -128,6 +132,7 @@ export default function IntakeWizard({
     if (res.ok) {
       submittedRef.current = true;
       setStatus("success");
+      trackEvent("IntakeWizard: Submitted", { firmSize: firmSize || "", role: role || "" });
     } else {
       const body = await res.json().catch(() => ({}));
       setError(body.error || "Something went wrong. Please try again.");

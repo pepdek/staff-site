@@ -20,9 +20,9 @@ export default function RoleCoverage() {
     <section className="border-t border-hairline px-6 py-16">
       <div className="mx-auto max-w-4xl">
         <Reveal>
-          <p className="text-center text-sm text-ink-muted">
+          <h2 className="text-center text-sm font-medium text-ink-muted">
             Looking for a specific role?
-          </p>
+          </h2>
         </Reveal>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {roles.map((role) => (
@@ -36,7 +36,7 @@ export default function RoleCoverage() {
                     {role.body}
                   </p>
                   <span className="mt-3 inline-block text-sm font-medium text-accent">
-                    Learn more →
+                    Learn more <span aria-hidden="true">→</span>
                   </span>
                 </LedgerCard>
               </Link>

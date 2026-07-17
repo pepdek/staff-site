@@ -30,6 +30,7 @@ export default function PipelineStages({
             }`}
           >
             <div
+              aria-hidden="true"
               className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-sm font-semibold ${
                 stage.done ? "bg-accent text-white" : "bg-paper text-ink-muted"
               }`}
@@ -37,7 +38,12 @@ export default function PipelineStages({
               {stage.done ? "✓" : i + 1}
             </div>
             <div>
-              <p className="text-sm font-semibold text-ink">{stage.title}</p>
+              <p className="text-sm font-semibold text-ink">
+                <span className="sr-only">
+                  {stage.done ? "Completed: " : "Upcoming: "}
+                </span>
+                {stage.title}
+              </p>
               <p className="mt-1 text-sm text-ink-muted">{stage.body}</p>
               <ArchivalLabel className="mt-1 block">{stage.timeframe}</ArchivalLabel>
             </div>

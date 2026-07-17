@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Monthly Close Checklist for Small Accounting Firms — Meridian",
   description:
     "A practical, structured monthly close checklist covering reconciliations, journal entries, AP/AR review, and close package prep.",
+  alternates: { canonical: "/checklist" },
   openGraph: {
     title: "Monthly Close Checklist for Small Accounting Firms",
     description:

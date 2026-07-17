@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { WizardShell, OptionChip } from "./WizardShell";
 import ArchivalLabel from "./ArchivalLabel";
 import StatusTracker from "./StatusTracker";
+import { trackEvent } from "@/lib/analytics";
 
 type Role = "bookkeeper" | "staff-accountant" | "not-sure";
 type Software = "qbo" | "qbd" | "xero" | "other";
@@ -69,6 +70,9 @@ export default function TalentWizard() {
   ];
 
   function goTo(next: number) {
+    if (next > step) {
+      trackEvent("TalentWizard: Step Completed", { step });
+    }
     setDirection(next > step ? 1 : -1);
     setStep(next);
   }
@@ -104,6 +108,7 @@ export default function TalentWizard() {
 
     if (res.ok) {
       setStatus("success");
+      trackEvent("TalentWizard: Submitted", { role: role || "" });
     } else {
       const body = await res.json().catch(() => ({}));
       setError(body.error || t("genericError"));

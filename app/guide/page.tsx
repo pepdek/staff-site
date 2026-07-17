@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Philippines vs. Latin America vs. In-House Bookkeeping — Meridian",
   description:
     "A side-by-side comparison of timezone overlap, response time, cost, and setup for in-house, Philippines/offshore, and LatAm bookkeeping staff.",
+  alternates: { canonical: "/guide" },
   openGraph: {
     title: "Philippines vs. Latin America vs. In-House Bookkeeping",
     description:

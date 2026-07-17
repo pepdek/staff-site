@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import LedgerCard from "./LedgerCard";
 import ArchivalLabel from "./ArchivalLabel";
@@ -32,6 +33,9 @@ export function OptionChip({
   );
 }
 
+const FOCUSABLE_SELECTOR =
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export function WizardShell({
   step,
   totalSteps,
@@ -57,11 +61,33 @@ export function WizardShell({
   continueLabel?: string;
   progressLabel?: string;
 }) {
+  const stepRef = useRef<HTMLDivElement>(null);
+  const isFirstRender = useRef(true);
+
+  // Move focus to the new step's first focusable field on every
+  // transition (not the initial mount, so the page load itself doesn't
+  // steal focus) — keyboard/screen-reader users otherwise stay focused
+  // on wherever the "Continue" button used to be, disconnected from the
+  // step that just appeared.
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    const first = stepRef.current?.querySelector<HTMLElement>(FOCUSABLE_SELECTOR);
+    first?.focus();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [step]);
+
+  const progressText =
+    progressLabel ??
+    `Step ${String(step).padStart(2, "0")} of ${String(totalSteps).padStart(2, "0")}`;
+
   return (
     <LedgerCard className="p-8">
-      <ArchivalLabel className="mb-4 block">
-        {progressLabel ??
-          `Step ${String(step).padStart(2, "0")} of ${String(totalSteps).padStart(2, "0")}`}
+      {/* aria-live so the step counter is announced on every transition, not just visually updated. */}
+      <ArchivalLabel className="mb-4 block" aria-live="polite">
+        {progressText}
       </ArchivalLabel>
 
       {/*
@@ -76,6 +102,7 @@ export function WizardShell({
       */}
       <motion.div
         key={step}
+        ref={stepRef}
         initial={{ opacity: 0, x: direction > 0 ? 16 : -16 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.25, ease: "easeOut" }}

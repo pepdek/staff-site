@@ -12,6 +12,7 @@ import {
   type CostMode,
   type FirmSize,
 } from "@/lib/calculator";
+import { trackEvent } from "@/lib/analytics";
 
 export default function CalculatorWidget() {
   const [firmSize, setFirmSize] = useState<FirmSize>("small");
@@ -46,7 +47,10 @@ export default function CalculatorWidget() {
             </label>
             <select
               value={firmSize}
-              onChange={(e) => setFirmSize(e.target.value as FirmSize)}
+              onChange={(e) => {
+                setFirmSize(e.target.value as FirmSize);
+                trackEvent("Calculator: Input Changed", { field: "firmSize" });
+              }}
               className="w-full rounded-lg border border-hairline bg-paper px-4 py-2.5 text-ink outline-none focus:border-accent"
             >
               {Object.entries(FIRM_SIZE_LABELS).map(([value, label]) => (
@@ -70,6 +74,8 @@ export default function CalculatorWidget() {
               max={15}
               value={closeDays}
               onChange={(e) => setCloseDays(Number(e.target.value))}
+              onMouseUp={() => trackEvent("Calculator: Input Changed", { field: "closeDays" })}
+              onKeyUp={() => trackEvent("Calculator: Input Changed", { field: "closeDays" })}
               className="w-full accent-accent"
             />
           </div>
@@ -81,7 +87,10 @@ export default function CalculatorWidget() {
             <div className="mb-3 flex overflow-hidden rounded-lg border border-hairline">
               <button
                 type="button"
-                onClick={() => setCostMode("in-house")}
+                onClick={() => {
+                  setCostMode("in-house");
+                  trackEvent("Calculator: Input Changed", { field: "costMode" });
+                }}
                 className={`flex-1 px-4 py-2 text-sm transition-colors ${
                   costMode === "in-house"
                     ? "bg-accent text-white"
@@ -92,7 +101,10 @@ export default function CalculatorWidget() {
               </button>
               <button
                 type="button"
-                onClick={() => setCostMode("outsourcing")}
+                onClick={() => {
+                  setCostMode("outsourcing");
+                  trackEvent("Calculator: Input Changed", { field: "costMode" });
+                }}
                 className={`flex-1 px-4 py-2 text-sm transition-colors ${
                   costMode === "outsourcing"
                     ? "bg-accent text-white"
@@ -114,6 +126,7 @@ export default function CalculatorWidget() {
                   step={1000}
                   value={inHouseSalary}
                   onChange={(e) => setInHouseSalary(Number(e.target.value))}
+                  onBlur={() => trackEvent("Calculator: Input Changed", { field: "inHouseSalary" })}
                   className="w-full rounded-lg border border-hairline bg-paper px-4 py-2.5 text-ink outline-none focus:border-accent"
                 />
               </div>
@@ -130,6 +143,7 @@ export default function CalculatorWidget() {
                   onChange={(e) =>
                     setOutsourcingMonthlyCost(Number(e.target.value))
                   }
+                  onBlur={() => trackEvent("Calculator: Input Changed", { field: "outsourcingMonthlyCost" })}
                   className="w-full rounded-lg border border-hairline bg-paper px-4 py-2.5 text-ink outline-none focus:border-accent"
                 />
               </div>
@@ -187,6 +201,7 @@ export default function CalculatorWidget() {
         </ArchivalLabel>
         <Link
           href={`/?firmSize=${firmSize}&closeDays=${closeDays}#contact`}
+          onClick={() => trackEvent("Calculator: CTA Clicked", { firmSize })}
           className="btn-primary mt-6 inline-block rounded-lg px-6 py-3 text-base font-medium"
         >
           Get this exact setup — book a call

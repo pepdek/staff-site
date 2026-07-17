@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Cost & Speed Calculator — Meridian",
   description:
     "See exactly how much you'd save and how many days faster your monthly close could run with a same-timezone Meridian bookkeeper, vs. in-house or offshore staff.",
+  alternates: { canonical: "/calculator" },
   openGraph: {
     title: "How much could same-timezone bookkeeping save your firm?",
     description:

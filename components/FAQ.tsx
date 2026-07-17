@@ -1,6 +1,7 @@
 import Reveal from "./Reveal";
 import ArchivalLabel from "./ArchivalLabel";
 import FAQList from "./FAQList";
+import FAQJsonLd from "./FAQJsonLd";
 
 const faqs = [
   {
@@ -40,6 +41,7 @@ const faqs = [
 export default function FAQ() {
   return (
     <section id="faq" className="border-t border-hairline px-6 py-28">
+      <FAQJsonLd items={faqs} />
       <div className="mx-auto max-w-3xl">
         <Reveal>
           <ArchivalLabel className="mb-3 block text-center">

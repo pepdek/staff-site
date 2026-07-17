@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "What to Have Ready Before Your $295 Trial Starts — Meridian",
   description:
     "Software access, current open items, and reference material to have ready before your Meridian trial starts, so the two weeks count.",
+  alternates: { canonical: "/pilot-readiness" },
   openGraph: {
     title: "What to have ready before your $295 trial starts",
     description:

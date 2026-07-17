@@ -60,7 +60,10 @@ body {
   background: #0c5a3c;
 }
 
-/* FlipCard — trust/compliance badges only. */
+/* FlipCard — trust/compliance badges only. Driven by the .flip-card-flipped
+   class (toggled on click or Enter/Space via the button's own state), not
+   :hover/:focus-within — a passing-focus flip never told a keyboard user
+   anything changed, and reverted the moment focus moved on. */
 .flip-card {
   perspective: 1000px;
 }
@@ -71,8 +74,7 @@ body {
   transition: transform 0.35s ease;
   transform-style: preserve-3d;
 }
-.flip-card:hover .flip-card-inner,
-.flip-card:focus-within .flip-card-inner {
+.flip-card-inner.flip-card-flipped {
   transform: rotateY(180deg);
 }
 .flip-card-face {
@@ -96,12 +98,10 @@ body {
     transform: none;
     opacity: 0;
   }
-  .flip-card:hover .flip-card-back,
-  .flip-card:focus-within .flip-card-back {
+  .flip-card-inner.flip-card-flipped .flip-card-back {
     opacity: 1;
   }
-  .flip-card:hover .flip-card-front,
-  .flip-card:focus-within .flip-card-front {
+  .flip-card-inner.flip-card-flipped .flip-card-front {
     opacity: 0;
   }
 }

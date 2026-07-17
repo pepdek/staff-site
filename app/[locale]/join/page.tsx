@@ -13,6 +13,17 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: { canonical: "/join" },
+    openGraph: {
+      title: t("heroHeadline"),
+      description: t("metaDescription"),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("heroHeadline"),
+      description: t("metaDescription"),
+    },
   };
 }
 

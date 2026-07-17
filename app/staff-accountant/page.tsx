@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Outsource a Staff Accountant for Month-End Close — Meridian",
   description:
     "Outsource your staff accountant role to a dedicated hire who works your business hours — month-end close, journal entries, and close packages, without the weekend scramble.",
+  alternates: { canonical: "/staff-accountant" },
   openGraph: {
     title:
       "Month-end close eating your weekends? Add a staff accountant who works your hours.",

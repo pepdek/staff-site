@@ -4,6 +4,7 @@ import { useState } from "react";
 import { COMPARISON_ROWS } from "@/lib/guide";
 import LedgerCard from "./LedgerCard";
 import ArchivalLabel from "./ArchivalLabel";
+import { trackEvent } from "@/lib/analytics";
 
 const VISIBLE_ROWS_WHEN_LOCKED = 2;
 
@@ -44,6 +45,7 @@ export default function GuideTable() {
     // Reveal immediately — the POST below is fire-and-forget for lead capture,
     // not a gate the user has to wait on.
     setUnlocked(true);
+    trackEvent("Guide: Unlocked");
 
     const res = await fetch("/api/lead", {
       method: "POST",

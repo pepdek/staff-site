@@ -3,15 +3,19 @@
 import { useState } from "react";
 import LedgerCard from "./LedgerCard";
 import type { ChecklistSection } from "@/lib/checklist";
+import { trackEvent } from "@/lib/analytics";
 
 function Section({ section }: { section: ChecklistSection }) {
   return (
     <LedgerCard className="p-6">
-      <h3 className="text-base font-semibold text-ink">{section.title}</h3>
+      <h2 className="text-base font-semibold text-ink">{section.title}</h2>
       <ul className="mt-3 space-y-2">
         {section.items.map((item) => (
           <li key={item} className="flex items-start gap-3 text-sm text-ink-muted">
-            <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-hairline text-[10px]">
+            <span
+              aria-hidden="true"
+              className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-hairline text-[10px]"
+            >
               ✓
             </span>
             {item}
@@ -46,6 +50,7 @@ export default function GatedChecklist({
     // Reveal immediately — the POST below is fire-and-forget for lead capture,
     // not a gate the user has to wait on (same pattern as /guide).
     setUnlocked(true);
+    trackEvent("Checklist: Unlocked", { source });
 
     const res = await fetch("/api/lead", {
       method: "POST",
@@ -66,6 +71,7 @@ export default function GatedChecklist({
     // ponytail: window.print() is the native "save as PDF" flow every
     // browser already ships — same approach as the /guide download,
     // avoids adding a PDF-generation dependency for one button.
+    trackEvent("Checklist: Downloaded", { source });
     window.print();
   }
 

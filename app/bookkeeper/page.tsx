@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Hire a Bookkeeper for Your CPA Firm — Meridian",
   description:
     "Outsource bookkeeping for your small accounting firm to a dedicated bookkeeper who works your business hours — same price as Philippines-based providers, no long-term contract.",
+  alternates: { canonical: "/bookkeeper" },
   openGraph: {
     title: "Need a bookkeeper for your firm who's awake during your close?",
     description:

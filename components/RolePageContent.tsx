@@ -7,6 +7,7 @@ import IntakeWizard from "./IntakeWizard";
 import Pricing from "./Pricing";
 import Trust from "./Trust";
 import FAQList, { type FAQItem } from "./FAQList";
+import FAQJsonLd from "./FAQJsonLd";
 
 export interface RolePageContentProps {
   role: string; // e.g. "bookkeeper" — captured on wizard submissions from this page
@@ -84,7 +85,10 @@ export default function RolePageContent({
                   key={task}
                   className="ledger-card flex items-center gap-3 rounded-xl px-5 py-4"
                 >
-                  <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-light text-accent">
+                  <span
+                    aria-hidden="true"
+                    className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-light text-accent"
+                  >
                     ✓
                   </span>
                   <span className="text-sm text-ink">{task}</span>
@@ -99,6 +103,7 @@ export default function RolePageContent({
       <Trust />
 
       <section className="border-b border-hairline px-6 py-28">
+        <FAQJsonLd items={faqs} />
         <div className="mx-auto max-w-3xl">
           <Reveal>
             <h2 className="text-center font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">

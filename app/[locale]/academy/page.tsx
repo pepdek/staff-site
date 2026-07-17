@@ -12,6 +12,17 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: t("metaTitle"),
     description: t("metaDescription"),
+    alternates: { canonical: "/academy" },
+    openGraph: {
+      title: t("headline"),
+      description: t("metaDescription"),
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: t("headline"),
+      description: t("metaDescription"),
+    },
   };
 }
 
@@ -57,9 +68,9 @@ export default async function AcademyPage() {
             {tracks.map((track) => (
               <Reveal key={track.title}>
                 <LedgerCard className="p-6">
-                  <h3 className="text-base font-semibold text-ink">
+                  <h2 className="text-base font-semibold text-ink">
                     {track.title}
-                  </h3>
+                  </h2>
                   <p className="mt-2 text-sm leading-relaxed text-ink-muted">
                     {track.body}
                   </p>

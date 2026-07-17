@@ -33,7 +33,7 @@ export default function Trust() {
             Vetted before they touch your books
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-center text-sm text-ink-muted">
-            Click or hover a card to see how each claim is verified.
+            Click a card (or press Enter) to see how each claim is verified.
           </p>
         </Reveal>
         <Reveal>
@@ -44,7 +44,10 @@ export default function Trust() {
                 className="h-32"
                 front={
                   <div className="flex items-center gap-3">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-light text-accent">
+                    <span
+                      aria-hidden="true"
+                      className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-accent-light text-accent"
+                    >
                       ✓
                     </span>
                     <span className="text-sm font-medium text-ink">
