@@ -4,9 +4,11 @@ import { motion } from "framer-motion";
 import LedgerCard from "./LedgerCard";
 import ArchivalLabel from "./ArchivalLabel";
 
-// Shared by IntakeWizard (client-facing) and TalentWizard (talent-facing)
-// so both multi-step flows look and behave identically without
-// duplicating the progress indicator / step-transition wrapper.
+// Shared by IntakeWizard (client-facing, English-only) and TalentWizard
+// (talent-facing, localized) so both multi-step flows look and behave
+// identically without duplicating the progress indicator / step
+// transition wrapper. All copy is passed in by the caller (defaults are
+// English) so this file has no i18n dependency of its own.
 
 export function OptionChip({
   selected,
@@ -39,6 +41,9 @@ export function WizardShell({
   onContinue,
   showNav = true,
   continueDisabled = false,
+  backLabel = "Back",
+  continueLabel = "Continue",
+  progressLabel,
 }: {
   step: number;
   totalSteps: number;
@@ -48,11 +53,15 @@ export function WizardShell({
   onContinue?: () => void;
   showNav?: boolean;
   continueDisabled?: boolean;
+  backLabel?: string;
+  continueLabel?: string;
+  progressLabel?: string;
 }) {
   return (
     <LedgerCard className="p-8">
       <ArchivalLabel className="mb-4 block">
-        Step {String(step).padStart(2, "0")} of {String(totalSteps).padStart(2, "0")}
+        {progressLabel ??
+          `Step ${String(step).padStart(2, "0")} of ${String(totalSteps).padStart(2, "0")}`}
       </ArchivalLabel>
 
       {/*
@@ -82,7 +91,7 @@ export function WizardShell({
             disabled={step === 1}
             className="rounded-lg border border-hairline px-5 py-2.5 text-sm font-medium text-ink-muted hover:border-ink-muted hover:text-ink disabled:opacity-0"
           >
-            Back
+            {backLabel}
           </button>
           <button
             type="button"
@@ -90,7 +99,7 @@ export function WizardShell({
             disabled={continueDisabled}
             className="btn-primary rounded-lg px-6 py-2.5 text-sm font-medium disabled:opacity-60"
           >
-            Continue
+            {continueLabel}
           </button>
         </div>
       )}

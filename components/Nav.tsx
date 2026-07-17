@@ -1,6 +1,7 @@
 import Link from "next/link";
+import LanguageToggle from "./LanguageToggle";
 
-export default function Nav() {
+export default function Nav({ talentNav = false }: { talentNav?: boolean }) {
   return (
     <header className="sticky top-0 z-50 border-b border-hairline bg-paper/90 backdrop-blur-sm print:hidden">
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
@@ -47,13 +48,16 @@ export default function Nav() {
           </Link>
         </div>
         <div className="flex items-center gap-4">
-          {/* Talent-facing link, deliberately not styled as a competing CTA next to "Book a call". */}
-          <Link
-            href="/join"
-            className="hidden text-sm text-ink-muted hover:text-ink sm:inline"
-          >
-            For talent
-          </Link>
+          {/* Language toggle only ever renders on talent-facing pages (/join, /academy) — talentNav is only passed true from within app/[locale]. */}
+          {talentNav && <LanguageToggle />}
+          {!talentNav && (
+            <Link
+              href="/join"
+              className="hidden text-sm text-ink-muted hover:text-ink sm:inline"
+            >
+              For talent
+            </Link>
+          )}
           <Link
             href="/#contact"
             className="btn-primary rounded-lg px-4 py-2 text-sm font-medium"

@@ -57,7 +57,19 @@ not a task, until bookkeeper/staff-accountant prove out.
 The following need real internal data before this goes live — everything
 else in this feature is functional as built:
 
-- **Pay-band figures** (`components/TalentWizard.tsx`, Step 1) — "$8-14/hr" (bookkeeper) and "$12-20/hr" (staff accountant) are placeholders, not confirmed pay bands.
-- **Meridian Academy curriculum** (`app/join/page.tsx`) — the program description (GAAP fundamentals, QuickBooks/Xero certification, close-process training) is a v1 placeholder structure. Needs real modules, hours, and any certifying-body details.
-- **Assessment/review SLA timing** (`components/StatusTracker.tsx`) — "scheduled within 2 business days," "reviewed within 3 business days," etc. are placeholder timing pending real internal SLA data.
+- **Pay-band figures** (`messages/*.json`, `TalentWizard.step1Bookkeeper`/`step1StaffAccountant`) — "$8-14/hr" (bookkeeper) and "$12-20/hr" (staff accountant) are placeholders, not confirmed pay bands. These numbers are identical across all three locales by design — only surrounding copy is translated.
+- **Meridian Academy curriculum** (`app/[locale]/academy/page.tsx`, `messages/*.json` under `Academy`) — the program description (GAAP fundamentals, QuickBooks/Xero certification, close-process training) is a v1 placeholder structure. Needs real modules, hours, and any certifying-body details.
+- **Assessment/review SLA timing** (`messages/*.json` under `StatusTracker`) — "scheduled within 2 business days," "reviewed within 3 business days," etc. are placeholder timing pending real internal SLA data.
 - **Resume upload** (`components/TalentWizard.tsx`, Step 4) — uses a link input (resume/LinkedIn/portfolio URL) instead of a file upload, since file upload needs multipart handling and storage that's out of scope for this pass. Revisit if a link proves too much friction for applicants.
+
+## Localization (`/join`, `/academy`)
+
+Scoped deliberately to the talent-facing pages via next-intl — everything
+client-facing (`/`, `/calculator`, `/guide`, `/bookkeeper`,
+`/staff-accountant`) stays English-only and lives entirely outside the
+`app/[locale]` route group, untouched by `middleware.ts`'s matcher.
+
+- Three locales: `en` (default, no URL prefix — `/join`), `es` (`/es/join`), `pt` (`/pt/join`).
+- The pill toggle in the nav (`components/LanguageToggle.tsx`) switches locale in place; persistence across visits and initial browser-language detection both come from next-intl's built-in `NEXT_LOCALE` cookie + `Accept-Language` negotiation (`middleware.ts`) — not hand-rolled `localStorage`, since the library already does this and a second mechanism would just be a second source of truth for the same setting.
+- **Spanish and Portuguese translations** (`messages/es.json`, `messages/pt.json`) were written for initial launch, not machine-translated, but should be reviewed by a native speaker in each target market — ideally someone from the actual candidate pool — before this goes fully live. This is a **review, not a re-write**: the structure and terminology (QuickBooks, Xero, GAAP left untranslated, as used in LATAM accounting contexts) are intentional; the ask is to sanity-check phrasing, not redo it.
+- Pay-band and other numeric figures in `TalentWizard` are identical across all three `messages/*.json` files by design (see above) — don't let a translation review touch the numbers.

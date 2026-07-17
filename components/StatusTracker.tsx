@@ -1,42 +1,47 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import LedgerCard from "./LedgerCard";
 import ArchivalLabel from "./ArchivalLabel";
 
-// TODO: "Reviewed within 3 business days" and the other timeframes below
-// are placeholder timing pending real internal SLA data — confirm actual
-// review/matching turnaround before launch.
-const STAGES = [
-  {
-    title: "Applied",
-    body: "We've received your application.",
-    timeframe: "Confirmed immediately",
-    done: true,
-  },
-  {
-    title: "Assessment scheduled",
-    body: "A short, paid skills assessment (1 hour, compensated at your quoted rate) gets scheduled.",
-    timeframe: "Scheduled within 2 business days",
-    done: false,
-  },
-  {
-    title: "Assessment reviewed",
-    body: "Your assessment is reviewed once — no separate client interview gauntlet.",
-    timeframe: "Reviewed within 3 business days",
-    done: false,
-  },
-  {
-    title: "Matched with a firm",
-    body: "You're matched with a firm whose hours and software fit your profile.",
-    timeframe: "Timing depends on current firm demand",
-    done: false,
-  },
-];
-
+// TODO: the timeframe strings below ("scheduled within 2 business days",
+// etc., see messages/*.json) are placeholder timing pending real internal
+// SLA data — confirm actual review/matching turnaround before launch.
 export default function StatusTracker() {
+  const t = useTranslations("StatusTracker");
+
+  const stages = [
+    {
+      title: t("appliedTitle"),
+      body: t("appliedBody"),
+      timeframe: t("appliedTimeframe"),
+      done: true,
+    },
+    {
+      title: t("scheduledTitle"),
+      body: t("scheduledBody"),
+      timeframe: t("scheduledTimeframe"),
+      done: false,
+    },
+    {
+      title: t("reviewedTitle"),
+      body: t("reviewedBody"),
+      timeframe: t("reviewedTimeframe"),
+      done: false,
+    },
+    {
+      title: t("matchedTitle"),
+      body: t("matchedBody"),
+      timeframe: t("matchedTimeframe"),
+      done: false,
+    },
+  ];
+
   return (
     <LedgerCard className="p-8">
-      <ArchivalLabel className="mb-4 block">Your application status</ArchivalLabel>
+      <ArchivalLabel className="mb-4 block">{t("heading")}</ArchivalLabel>
       <div className="space-y-4">
-        {STAGES.map((stage, i) => (
+        {stages.map((stage, i) => (
           <div
             key={stage.title}
             className={`flex gap-4 rounded-xl border px-5 py-4 ${
