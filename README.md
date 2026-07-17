@@ -1,10 +1,12 @@
 # Meridian — landing page
 
 Next.js 14 (App Router) + TypeScript + Tailwind + Framer Motion. No
-database — the homepage's `IntakeWizard` (`components/IntakeWizard.tsx`)
-and the `/guide` gate both post to `/app/api/lead/route.ts`, which emails
-via Resend if configured, or logs to console otherwise. Every submission
-includes a `source` field (`wizard`, `guide`) so leads can be told apart.
+database — client-side leads (`IntakeWizard`, the `/guide` gate) post to
+`/app/api/lead/route.ts`; talent applications (`TalentWizard` on `/join`)
+post to the separate `/app/api/talent-application/route.ts`. Both email
+via Resend if configured, or log to console otherwise. Every lead
+submission includes a `source` field (`wizard`, `guide`) so leads can be
+told apart.
 
 ## Run locally
 
@@ -20,10 +22,12 @@ Create `.env.local`:
 ```
 RESEND_API_KEY=
 LEAD_NOTIFICATION_EMAIL=
+TALENT_NOTIFICATION_EMAIL=
 ```
 
-Without `RESEND_API_KEY`, submitted leads are just logged to the server
-console (see the `TODO` in `app/api/lead/route.ts`).
+Without `RESEND_API_KEY`, submitted leads and talent applications are just
+logged to the server console (see the `TODO`s in `app/api/lead/route.ts`
+and `app/api/talent-application/route.ts`).
 
 ## Placeholders to replace before launch
 
@@ -47,3 +51,13 @@ than the general homepage. The logical next role pages once these two are
 validated: `/tax-preparer`, `/tax-reviewer`, `/ap-ar-specialist`, and
 `/payroll-specialist`. Don't build them yet — this is a sequencing note,
 not a task, until bookkeeper/staff-accountant prove out.
+
+## Talent-facing page (`/join`)
+
+The following need real internal data before this goes live — everything
+else in this feature is functional as built:
+
+- **Pay-band figures** (`components/TalentWizard.tsx`, Step 1) — "$8-14/hr" (bookkeeper) and "$12-20/hr" (staff accountant) are placeholders, not confirmed pay bands.
+- **Meridian Academy curriculum** (`app/join/page.tsx`) — the program description (GAAP fundamentals, QuickBooks/Xero certification, close-process training) is a v1 placeholder structure. Needs real modules, hours, and any certifying-body details.
+- **Assessment/review SLA timing** (`components/StatusTracker.tsx`) — "scheduled within 2 business days," "reviewed within 3 business days," etc. are placeholder timing pending real internal SLA data.
+- **Resume upload** (`components/TalentWizard.tsx`, Step 4) — uses a link input (resume/LinkedIn/portfolio URL) instead of a file upload, since file upload needs multipart handling and storage that's out of scope for this pass. Revisit if a link proves too much friction for applicants.

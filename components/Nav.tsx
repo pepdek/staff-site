@@ -46,12 +46,21 @@ export default function Nav() {
             FAQ
           </Link>
         </div>
-        <Link
-          href="/#contact"
-          className="btn-primary rounded-lg px-4 py-2 text-sm font-medium"
-        >
-          Book a call
-        </Link>
+        <div className="flex items-center gap-4">
+          {/* Talent-facing link, deliberately not styled as a competing CTA next to "Book a call". */}
+          <Link
+            href="/join"
+            className="hidden text-sm text-ink-muted hover:text-ink sm:inline"
+          >
+            For talent
+          </Link>
+          <Link
+            href="/#contact"
+            className="btn-primary rounded-lg px-4 py-2 text-sm font-medium"
+          >
+            Book a call
+          </Link>
+        </div>
       </nav>
     </header>
   );
